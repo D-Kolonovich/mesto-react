@@ -12,7 +12,7 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
 
-  const [selectedCard, setSelectedCard] = React.useState("");
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   const handleEditProfilePopupOpen = () => {
     setEditProfilePopupOpen(!isEditProfilePopupOpen);
@@ -35,7 +35,7 @@ function App() {
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
 
-    setSelectedCard("");
+    setSelectedCard(null);
   };
 
   return (
@@ -152,7 +152,7 @@ function App() {
         buttonText="Да"
       ></PopupWithForm>
 
-      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+      <ImagePopup card={selectedCard !== null && selectedCard} onClose={closeAllPopups} />
     </div>
   );
 }
