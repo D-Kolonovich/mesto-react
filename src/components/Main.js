@@ -11,26 +11,41 @@ function Main(props) {
   const [ userAvatar, setUserAvatar ] = React.useState("")
   const [ cards, setCards ] = React.useState([])
 
-
   React.useEffect(() => {
-    api.getUserInfo()
-      .then(({ name, about, avatar }) => {
-        setUserName(name);
-        setUserDescription(about);
-        setUserAvatar(avatar);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-
-    api.getInitialCards()
-      .then((cards) => {
-        setCards(cards)
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    Promise.all([
+      api.getUserInfo(),
+      api.getInitialCards()
+    ])
+    .then(([{ name, about, avatar }, cards]) => {
+      setUserName(name);
+      setUserDescription(about);
+      setUserAvatar(avatar);
+      setCards(cards)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }, [])
+
+  // React.useEffect(() => {
+  //   api.getUserInfo()
+  //     .then(({ name, about, avatar }) => {
+  //       setUserName(name);
+  //       setUserDescription(about);
+  //       setUserAvatar(avatar);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     })
+
+  //   api.getInitialCards()
+  //     .then((cards) => {
+  //       setCards(cards)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     })
+  // }, [])
 
 
   return (

@@ -12,7 +12,7 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
 
-  const [selectedCard, setSelectedCard] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState("");
 
   const handleEditProfilePopupOpen = () => {
     setEditProfilePopupOpen(!isEditProfilePopupOpen);
@@ -35,20 +35,8 @@ function App() {
     setAddPlacePopupOpen(false)
     setEditAvatarPopupOpen(false)
 
-    setSelectedCard(false)
+    setSelectedCard("")
   }
-
-//   const handleEditAvatarClick = () => {
-//     document.querySelector(".popup_type_edit-avatar").classList.add('popup_opened');
-//  }
-
-//  const handleEditProfileClick = () => {
-//   document.querySelector(".popup_type_edit-profile").classList.add('popup_opened');
-// }
-
-// const handleAddPlaceClick = () => {
-// document.querySelector(".popup_type_add-card").classList.add('popup_opened');
-// }
 
   return (
     <div className="page">
@@ -63,9 +51,14 @@ function App() {
       
       <Footer />
 
-      <PopupWithForm name="profile" title="Редактировать профиль" children={
-        <>
-        <input
+      <PopupWithForm
+      name="profile"
+      title="Редактировать профиль"
+      buttonText="Сохранить"
+      isOpen={isEditProfilePopupOpen}
+      onClose={closeAllPopups}
+      >
+      <input
                 type="text"
                 // value=""
                 id="input-name"
@@ -96,43 +89,33 @@ function App() {
               <span className="form__input-error input-job-error">
                 Вы пропустили это поле.
               </span>
-        </>
-      }
-      buttonText="Сохранить"
-      isOpen={isEditProfilePopupOpen}
-      onClose={closeAllPopups}
-      />
+      </PopupWithForm>
 
-      <PopupWithForm name="avatar" title="Обновить аватар" children={
-        <>
-          <input type="url" id="avatar-link" name="avatar" className="form__info form__info_type_avatar-link" placeholder="Ссылка на картинку" required/>
-          <span className="form__input-error avatar-link-error">Введите адрес сайта.</span>
-        </>
-      }
+      <PopupWithForm name="avatar" title="Обновить аватар"
       buttonText="Сохранить"
       isOpen={isEditAvatarPopupOpen}
       onClose={closeAllPopups}
-      />
+      >
+        <input type="url" id="avatar-link" name="avatar" className="form__info form__info_type_avatar-link" placeholder="Ссылка на картинку" required/>
+        <span className="form__input-error avatar-link-error">Введите адрес сайта.</span>
+      </PopupWithForm>
 
-      <PopupWithForm name="card" title="Новое место" children={
-        <>
-          <input type="text" id="input-title" className="form__info form__info_type_title" name="name" minLength="2" maxLength="30" placeholder="Название" autoComplete="off" required/>
-          <span className="form__input-error input-title-error">Вы пропустили это поле.</span>
-          <input type="url" id="input-link" className="form__info form__info_type_link" name="link" placeholder="Ссылка на картинку" autoComplete="off" required/>
-          <span className="form__input-error input-link-error">Введите адрес сайта.</span>
-        </>
-      } 
+      <PopupWithForm name="card" title="Новое место"
       buttonText="Создать"
       isOpen={isAddPlacePopupOpen}
       onClose={closeAllPopups}
-      />
+      >
+        <input type="text" id="input-title" className="form__info form__info_type_title" name="name" minLength="2" maxLength="30" placeholder="Название" autoComplete="off" required/>
+        <span className="form__input-error input-title-error">Вы пропустили это поле.</span>
+        <input type="url" id="input-link" className="form__info form__info_type_link" name="link" placeholder="Ссылка на картинку" autoComplete="off" required/>
+        <span className="form__input-error input-link-error">Введите адрес сайта.</span>
+      </PopupWithForm>
 
-      <PopupWithForm name="confirm" title="Вы уверены?" children={
-        <>
-        </>
-      }
+      <PopupWithForm name="confirm" title="Вы уверены?" 
       buttonText="Да"
-      />
+      >
+
+      </PopupWithForm>
 
       <ImagePopup
         card={selectedCard}
