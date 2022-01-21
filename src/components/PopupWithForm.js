@@ -12,7 +12,7 @@ function PopupWithForm(props) {
           title="Закрыть"
         ></button>
         <h2 className="popup__heading">{props.title}</h2>
-        <form className="form form-edit" name={`form-${props.name}`} noValidate>
+        <form className="form form-edit" name={`form-${props.name}`} noValidate onSubmit={props.handleSubmit}>
           <fieldset className="form__contact-info">
             {props.children}
             <button type="submit" className="form__button form__button-submit" name="submit">{props.buttonText}</button>

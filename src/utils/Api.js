@@ -21,38 +21,38 @@ class Api {
     }
 
     //установить информацию о пользователе
-    setUserInfo(data) {
+    setUserInfo(name, about) {
       return fetch(`${this._baseUrl}/users/me`, {
         method: 'PATCH',
         headers: this._headers,
         body: JSON.stringify({
-          name: data.name,
-          about: data.about
+          name,
+          about
         })
       })
       .then(this._checkResponse);
     }
   
     //установить аватар
-    setAvatar(data) {
+    setAvatar(avatar) {
       return fetch(`${this._baseUrl}/users/me/avatar`, {
         method: 'PATCH',
         headers: this._headers,
         body: JSON.stringify({
-          avatar: data.avatar
+          avatar: avatar
         })
       })
       .then(this._checkResponse);
     }
   
     //добавить карту
-    addCard(data) {
+    addCard(name, link) {
       return fetch(`${this._baseUrl}/cards`, {
         method: 'POST',
         headers: this._headers,
         body: JSON.stringify({
-          name: data.name,
-          link: data.link
+          name,
+          link
         })
       })
       .then(this._checkResponse);
@@ -83,6 +83,14 @@ class Api {
         headers: this._headers
       })
       .then(this._checkResponse);
+    }
+
+    changeLikeCardStatus(cardId, isLiked){
+      if(!isLiked){
+        return this.setLikeCard(cardId)
+      }else {
+        return this.removeLikeCard(cardId)
+      }
     }
 
     //проверить ответ
