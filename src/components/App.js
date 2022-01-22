@@ -20,11 +20,11 @@ function App() {
     cohort: "",
   });
 
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
 
-  const [selectedCard, setSelectedCard] = React.useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const [cards, setCards] = useState([]);
 
@@ -51,28 +51,42 @@ function App() {
 
     setSelectedCard(null);
   };
-
+  
   React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
+    Promise.all([
+      api.getUserInfo(),
+      api.getInitialCards()
+    ])
+      .then(([data, cards]) => {
+        setCurrentUser(data);
         setCards(cards);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [])
 
-  React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // React.useEffect(() => {
+  //   api
+  //     .getInitialCards()
+  //     .then((cards) => {
+  //       setCards(cards);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
+  // React.useEffect(() => {
+  //   api
+  //     .getUserInfo()
+  //     .then((data) => {
+  //       setCurrentUser(data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   const handleUpdateUser = (name, description) => {
     api
@@ -129,7 +143,7 @@ function App() {
       .deleteCard(cardId)
       .then((data) => {
         setCards((state) =>
-          state.filter((c) => (c._id === cardId ? false : true))
+          state.filter((c) => (c._id !== cardId))
         );
       })
       .catch((err) => {

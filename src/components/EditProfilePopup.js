@@ -14,7 +14,7 @@ function EditProfilePopup(props) {
   React.useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, props.isOpen]);
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
@@ -42,7 +42,7 @@ function EditProfilePopup(props) {
     >
       <input
         type="text"
-        // value=""
+        value={name}
         id="input-name"
         className="form__info form__info_type_name"
         name="name"
@@ -59,7 +59,7 @@ function EditProfilePopup(props) {
 
       <input
         type="text"
-        // value=""
+        value={description}
         id="input-job"
         className="form__info form__info_type_job"
         name="about"
